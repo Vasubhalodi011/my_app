@@ -2,6 +2,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import kotlinx.coroutines.tasks.await
 
 
 class AuthHelper {
@@ -18,13 +19,25 @@ class AuthHelper {
         }.addOnFailureListener {
             Log.e(TAG, "signUp: Failed SignUp")
         }
+
     }
 
-    fun signIn(email:String , password:String) {
+    // asynchronization
+    suspend fun signIn(email:String , password:String) : String? {
+        var msg:String? = null
         auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
             Log.e(TAG, "signIn: Successfully", )
+            msg = "Success"
         }.addOnFailureListener {
             Log.e(TAG, "signIn: Failed", )
-        }
+            msg = it.message
+        }.await()
+
+
+        return msg
+    }
+
+    fun signOut() {
+        auth.signOut()
     }
 }
