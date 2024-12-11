@@ -1,6 +1,7 @@
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
 
@@ -34,10 +35,14 @@ class AuthHelper {
         }.await()
 
 
+
         return msg
     }
 
-    fun signOut() {
-        auth.signOut()
+
+
+    fun logOut() {
+//        auth.signOut()
+        FirebaseAuth.getInstance().signOut()
     }
 }
