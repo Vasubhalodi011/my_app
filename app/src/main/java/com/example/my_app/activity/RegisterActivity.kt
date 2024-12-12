@@ -2,6 +2,7 @@ package com.example.my_app.activity
 
 import AuthHelper.Companion.authHelper
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,9 +27,21 @@ class RegisterActivity : AppCompatActivity() {
 
             val email = binding.emailId.text.toString()
             val password = binding.passwordId.text.toString()
+            val cpassword = binding.confirmPasswordId.text.toString()
 
-            authHelper.signUp(email,password)
-            finish()
+            if(email.isNotEmpty() && password.isNotEmpty() && cpassword.isNotEmpty()) {
+                if(password != cpassword) {
+                    Toast.makeText(this, "password and conform password not match", Toast.LENGTH_SHORT).show()
+                } else {
+                    authHelper.signUp(email, password)
+                    finish()
+                }
+            }
+
+            else {
+                Toast.makeText(this, "Required email and password", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
 

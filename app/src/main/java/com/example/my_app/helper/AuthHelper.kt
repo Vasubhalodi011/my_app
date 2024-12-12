@@ -1,7 +1,6 @@
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
 
@@ -24,15 +23,20 @@ class AuthHelper {
     }
 
     // asynchronization
-    suspend fun signIn(email:String , password:String) : String? {
-        var msg:String? = null
-        auth.signInWithEmailAndPassword(email,password).addOnSuccessListener {
-            Log.e(TAG, "signIn: Successfully", )
-            msg = "Success"
-        }.addOnFailureListener {
-            Log.e(TAG, "signIn: Failed", )
-            msg = it.message
-        }.await()
+    suspend fun signIn(email: String, password: String): String? {
+        var msg: String? = null
+
+        try {
+            auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+                Log.e(TAG, "signIn: Successfully")
+                msg = "Success"
+            }.addOnFailureListener {
+                Log.e(TAG, "signIn: Failed")
+                msg = it.message
+            }.await()
+        } catch (e: Exception) {
+            Log.e("Exception", "signIn: ${e.message}")
+        }
 
 
 
@@ -40,9 +44,8 @@ class AuthHelper {
     }
 
 
-
     fun logOut() {
 //        auth.signOut()
-        FirebaseAuth.getInstance().signOut()
+        Firebase.auth.signOut()
     }
 }

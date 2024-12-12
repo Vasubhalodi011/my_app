@@ -11,6 +11,7 @@ import com.example.my_app.R
 import com.example.my_app.databinding.ActivityHomeBinding
 import com.example.my_app.databinding.ActivityLoginBinding
 import com.example.my_app.databinding.ActivityRegisterBinding
+import com.example.my_app.googleClient
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
@@ -26,6 +27,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.imageView.setOnClickListener{
             authHelper.logOut()
+            googleClient.signOut()
 //            Firebase.auth.signOut()
             val intent = Intent(this,LoginActivity::class.java)
             startActivity(intent)

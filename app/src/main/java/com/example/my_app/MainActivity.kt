@@ -8,6 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.my_app.activity.HomeActivity
 import com.example.my_app.activity.LoginActivity
 import com.example.my_app.databinding.ActivityMainBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+
+lateinit var googleClient: GoogleSignInClient
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,10 +23,11 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        googleClient = GoogleSignIn.getClient(this, GoogleSignInOptions.DEFAULT_SIGN_IN)
 
         Handler().postDelayed(Runnable {
 
-            var intent:Intent
+            val intent:Intent
 
 
             if(authHelper.auth.currentUser!=null) {
@@ -33,7 +39,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }, 3000)
-
 
     }
 }
