@@ -37,6 +37,9 @@ class HomeActivity : AppCompatActivity() {
         binding.userNameId.text = authHelper.auth.currentUser?.displayName
         binding.emailId.text = authHelper.auth.currentUser?.email
 
-
+        binding.todoAddBtn.setOnClickListener {
+            val intent = Intent(this,AddTodoActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
