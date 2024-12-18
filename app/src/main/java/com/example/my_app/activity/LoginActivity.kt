@@ -12,9 +12,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.my_app.R
 import com.example.my_app.databinding.ActivityLoginBinding
-import com.example.my_app.googleClient
+import com.example.my_app.helper.FireStoreHelper.Companion.fireStoreHelper
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.GlobalScope
@@ -47,6 +46,13 @@ class LoginActivity : AppCompatActivity() {
                     val credential = GoogleAuthProvider.getCredential(googleId.result.idToken, null)
 
                     authHelper.auth.signInWithCredential(credential).addOnSuccessListener {
+                        Log.e("RUN", "onCreate: Run is running....", )
+                        val email = authHelper.auth.currentUser!!.email;
+                        val name = authHelper.auth.currentUser!!.displayName;
+
+                        if (email != null && name!= null) {
+                            fireStoreHelper.addUserData(email,name)
+                        }
                         val intent = Intent(this, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
@@ -77,9 +83,15 @@ class LoginActivity : AppCompatActivity() {
                 Log.e("MSG", "onCreate: $msg")
 
                 if (msg == "Success") {
+                    fireStoreHelper.addUserData(email, password)
+
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)
                     finish()
+
+
+
+
                 } else if (msg == "The supplied auth credential is incorrect, malformed or has expired.") {
                     Handler(Looper.getMainLooper()).post {
                         Toast.makeText(
@@ -109,10 +121,11 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-
         binding.googleBtn.setOnClickListener {
             val intent = googleClient.signInIntent
             registerGoogle.launch(intent)
+
+
         }
 
     }

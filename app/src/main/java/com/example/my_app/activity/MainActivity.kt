@@ -1,12 +1,10 @@
-package com.example.my_app
+package com.example.my_app.activity
 
 import AuthHelper.Companion.authHelper
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.example.my_app.activity.HomeActivity
-import com.example.my_app.activity.LoginActivity
 import com.example.my_app.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

@@ -23,7 +23,7 @@ class AddTodoActivity : AppCompatActivity() {
 
             if (title.isNotEmpty() && desc.isNotEmpty()) {
 
-                fireStoreHelper.addTodo(TodoModel(title, desc))
+                fireStoreHelper.addTodo(TodoModel(null, title, desc))
                 finish()
             } else {
                 Toast.makeText(this, "Required title and description", Toast.LENGTH_SHORT).show()

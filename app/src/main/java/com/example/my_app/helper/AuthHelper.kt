@@ -1,5 +1,6 @@
 import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.my_app.helper.FireStoreHelper.Companion.fireStoreHelper
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
@@ -29,6 +30,7 @@ class AuthHelper {
         try {
             auth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
                 Log.e(TAG, "signIn: Successfully")
+
                 msg = "Success"
             }.addOnFailureListener {
                 Log.e(TAG, "signIn: Failed")

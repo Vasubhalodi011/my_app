@@ -3,17 +3,15 @@ package com.example.my_app.activity
 import AuthHelper.Companion.authHelper
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.my_app.R
+import com.example.my_app.adpater.TodoAdpater
 import com.example.my_app.databinding.ActivityHomeBinding
-import com.example.my_app.databinding.ActivityLoginBinding
-import com.example.my_app.databinding.ActivityRegisterBinding
-import com.example.my_app.googleClient
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
+import com.example.my_app.helper.FireStoreHelper.Companion.fireStoreHelper
+import com.example.my_app.models.TodoModel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -23,6 +21,9 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
+
+
+        fireStoreHelper.fetchTodoData(binding.rvData)
 
 
         binding.imageView.setOnClickListener{
