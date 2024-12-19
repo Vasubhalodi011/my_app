@@ -16,6 +16,15 @@ class AddTodoActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+       val uid =  intent.getStringExtra("uid")
+       val updateTitle =  intent.getStringExtra("title")
+       val updateDesc =  intent.getStringExtra("desc")
+
+        if(uid!=null) {
+            binding.titleId.setText(updateTitle)
+            binding.descId.setText(updateDesc)
+        }
+
 
         binding.saveTodoId.setOnClickListener {
             val title = binding.titleId.text.toString()
@@ -23,7 +32,13 @@ class AddTodoActivity : AppCompatActivity() {
 
             if (title.isNotEmpty() && desc.isNotEmpty()) {
 
-                fireStoreHelper.addTodo(TodoModel(null, title, desc))
+                if(uid!=null) {
+                    // Update TodoData
+                    fireStoreHelper.updateTodo(TodoModel(uid,title,desc))
+                }else {
+                    // Add TodoData
+                    fireStoreHelper.addTodo(TodoModel(null, title, desc))
+                }
                 finish()
             } else {
                 Toast.makeText(this, "Required title and description", Toast.LENGTH_SHORT).show()

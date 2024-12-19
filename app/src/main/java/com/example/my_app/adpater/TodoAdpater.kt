@@ -1,5 +1,6 @@
 package com.example.my_app.adpater
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.my_app.R
+import com.example.my_app.activity.AddTodoActivity
 import com.example.my_app.databinding.TodoItemBinding
 import com.example.my_app.helper.FireStoreHelper.Companion.fireStoreHelper
 import com.example.my_app.models.TodoModel
@@ -30,6 +32,16 @@ class TodoAdpater(val l1:MutableList<TodoModel>) : RecyclerView.Adapter<TodoAdpa
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         holder.binding.todoTitle.text = l1[position].title
         holder.binding.todoDesc.text = l1[position].desc
+
+        holder.binding.todoEdit.setOnClickListener {
+            val intent = Intent(holder.itemView.context, AddTodoActivity::class.java)
+
+            intent.putExtra("uid",l1[position].uid)
+            intent.putExtra("title",l1[position].title)
+            intent.putExtra("desc",l1[position].desc)
+
+            holder.itemView.context.startActivity(intent)
+        }
 
         holder.binding.deleteTodo.setOnClickListener {
             fireStoreHelper.deleteTodo(l1[position].uid!!)

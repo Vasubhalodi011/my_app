@@ -65,6 +65,11 @@ class FireStoreHelper {
     }
 
     // TODO : Title and Description Update
+    fun updateTodo(model: TodoModel) {
+        fireStore.collection(colletionName).document(currentUserEmail)
+            .collection(notesColletionName).document(model.uid!!).set(model)
+    }
+
     // TODO : Title and Description Delete
     fun deleteTodo(uid: String) {
         fireStore.collection(colletionName).document(currentUserEmail)
